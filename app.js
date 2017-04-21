@@ -1,3 +1,4 @@
+"use strict;";
 
 var request = require('request');
 var cheerio = require('cheerio');
@@ -31,7 +32,10 @@ var getFixtures = function() {
 }
 
 var findPrevDate = function ($, $currentNode) {
+    // we are finding form the home element which in in a td the date is at the tr level
     var $top = $currentNode.parent();
+
+    // iterate back over the tr in the table until we find one with a date class
     while(!$top.prev().hasClass('date')){
         $top = $top.prev();
     }
