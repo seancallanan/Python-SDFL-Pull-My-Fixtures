@@ -50,7 +50,6 @@ var printFixtures = function($, $fixturesAtAge, $ageGroup) {
      $awayClub.text().indexOf('Terenure Rangers') >= 0) {
     var $awayClubAr = $awayClub.toArray();
     var $homeClubAr = $homeClub.toArray();
-    //var $date = $('.date td', $fixturesAtAge);
     var $time = $('.item > .time', $fixturesAtAge);
     var $venue = $('td:has(strong)', $fixturesAtAge);
     var $referee = $('.item > .referee', $fixturesAtAge);
