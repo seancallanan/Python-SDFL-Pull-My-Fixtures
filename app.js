@@ -15,7 +15,6 @@ var getFixtures = function() {
       var $ = cheerio.load(body),
           $body = $('body'),
           $fixtures = $body.find('.competition');
-      console.log(body);
       var terenureFixtures = 0;
       if($fixtures.length <= 0){
         console.log('No fixtures posted');
@@ -31,6 +30,15 @@ var getFixtures = function() {
   });
 }
 
+var findPrevDate = function ($, $currentNode) {
+    var $top = $currentNode.parent();
+    while(!$top.prev().hasClass('date')){
+        $top = $top.prev();
+    }
+
+    return $top.prev().text();
+}
+
 var printFixtures = function($, $fixturesAtAge, $ageGroup) {
   var $homeClub = $('.item  > .homeClub', $fixturesAtAge);
   var $awayClub = $('.item  > .awayClub', $fixturesAtAge);
@@ -38,7 +46,7 @@ var printFixtures = function($, $fixturesAtAge, $ageGroup) {
      $awayClub.text().indexOf('Terenure Rangers') >= 0) {
     var $awayClubAr = $awayClub.toArray();
     var $homeClubAr = $homeClub.toArray();
-    var $date = $('.date td', $fixturesAtAge);
+    //var $date = $('.date td', $fixturesAtAge);
     var $time = $('.item > .time', $fixturesAtAge);
     var $venue = $('td:has(strong)', $fixturesAtAge);
     var $referee = $('.item > .referee', $fixturesAtAge);
@@ -47,18 +55,20 @@ var printFixtures = function($, $fixturesAtAge, $ageGroup) {
     for(var ndx = 0; ndx < $homeClub.length; ndx++){
       var away = $($awayClubAr[ndx]).slice(0).eq(0).text();
       var home = $($homeClubAr[ndx]).slice(0).eq(0).text();
+      var $homeElement = $homeClubAr[ndx];
       if(home.indexOf('Terenure Rangers') >= 0 ||
          away.indexOf('Terenure Rangers') >= 0){
           var timeAr = $time.toArray();
           var venueAr = $venue.toArray();
           var refereeAr = $referee.toArray();
           var commentAr = $comment.toArray();
+          var date = findPrevDate($, $($homeElement));
 
           console.log($ageGroup.text() + ', \t' +
           home + ' v ' +
           away + ' \t' +
           $(venueAr[ndx]).slice(0).eq(0).text() + ' \t' +
-          $date.text() + ' at '  +
+          date + ' at '  +
           $(timeAr[ndx]).slice(0).eq(0).text() +
           '\tRef: ' + $(refereeAr[ndx]).slice(0).eq(0).text() + '\t' +
           $(commentAr[ndx]).slice(0).eq(0).text());
