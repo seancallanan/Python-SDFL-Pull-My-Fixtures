@@ -13,6 +13,7 @@ var getFixtures = function() {
       if(err && response.statusCode !== 200) {
         console.log('Request error.');
       }
+
       var $ = cheerio.load(body),
           $body = $('body'),
           $fixtures = $body.find('.competition');
@@ -67,12 +68,13 @@ var printFixtures = function($, $fixturesAtAge, $ageGroup) {
           var commentAr = $comment.toArray();
           var date = findPrevDate($, $($homeElement));
 
+          // printout each fixture
           console.log($ageGroup.text() + ', \t' +
           home + ' v ' +
           away + ' \t' +
-          $(venueAr[ndx]).slice(0).eq(0).text() + ' \t' +
           date + ' at '  +
-          $(timeAr[ndx]).slice(0).eq(0).text() +
+          $(timeAr[ndx]).slice(0).eq(0).text() + ' \t' +
+          $(venueAr[ndx]).slice(0).eq(0).text() + ' \t' +
           '\tRef: ' + $(refereeAr[ndx]).slice(0).eq(0).text() + '\t' +
           $(commentAr[ndx]).slice(0).eq(0).text());
       }
