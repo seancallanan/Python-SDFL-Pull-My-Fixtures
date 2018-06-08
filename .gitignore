@@ -1,1 +1,8 @@
 /.idea
+
+lib
+node_modules
+include
+bin
+pip-selfcheck.json
+.idea
