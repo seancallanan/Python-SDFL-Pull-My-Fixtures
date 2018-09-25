@@ -6,3 +6,4 @@ include
 bin
 pip-selfcheck.json
 .idea
+.json
