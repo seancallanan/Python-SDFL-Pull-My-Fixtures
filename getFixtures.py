@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 
 TARGET_CLUB = 'Terenure Rangers'
+fixturesFound = False
 
 try:
     parser = argparse.ArgumentParser()
@@ -31,6 +32,7 @@ def getFixtures():
             elif 'item' in fixtureRow['class']:
                 fixture = getFixture(fixtureRow, sdflSoup)
                 if fixture:
+                    fixturesFound = True
                     fixture['ageGroup'] = ageGroup
                     fixture['date'] = date
                     printFixture(fixture)
@@ -57,3 +59,6 @@ def printFixture(fixture):
     print('{ageGroup}, {homeClub} v {awayClub}  {date} at {time} {venue} Ref : {referee}'.format(**fixture))
 
 getFixtures()
+
+if ( not fixturesFound ):
+    print('No fixtures found for {0}'.format(TARGET_CLUB))
